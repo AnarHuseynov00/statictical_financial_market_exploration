@@ -88,8 +88,10 @@ def backtest_strategy(hold_period = 5, percentage = 5, days_back = 1, period = 9
     return avg_return, returns, total_earning, total_val, memo
 
 if __name__ == "__main__":
-    average_return, all_returns, total_earning, total_val, trading_memo = backtest_strategy(hold_period=10, percentage=10, days_back=5, period=720)
-    benchmark_return, benchmark_earning = calculate_spy_benchmark(period=720)
+    common_period = 1800
+    
+    average_return, all_returns, total_earning, total_val, trading_memo = backtest_strategy(hold_period=10, percentage=10, days_back=5, period=common_period)
+    benchmark_return, benchmark_earning = calculate_spy_benchmark(period=common_period)
     print(f"SPY BENCHMARK IS {benchmark_return}, {benchmark_earning}")
     print(f"Average return of the strategy: {average_return:.2f}%")
     print(f"total earning of the strategy: {total_earning:.2f}")
