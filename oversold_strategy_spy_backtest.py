@@ -1,10 +1,9 @@
 # %%
-import pandas as pd
-import yfinance as yf
 import numpy as np
-from datetime import date, timedelta
 import matplotlib.pyplot as plt
-from source_files.oversold_strategy import backtest_strategy, calculate_spy_benchmark
+from source_files.strategies.oversold_strategy import backtest_strategy
+from source_files.instruments.spy import calculate_spy_return
+
 """
 In this script, we are going to implement the simple trading strategy called "buy oversold". The details are such:
 1. Only S&P 500 stocks are taken into consideration for trading.
@@ -16,9 +15,9 @@ In this script, we are going to implement the simple trading strategy called "bu
 
 
 if __name__ == "__main__":
-    common_period = 1800
+    common_period = 100
     average_return, all_returns, total_earning, total_val, trading_memo, trade_volume_by_date, profit_by_date = backtest_strategy(hold_period=10, percentage=20, days_back=5, period=common_period)
-    benchmark_return, benchmark_earning = calculate_spy_benchmark(period=common_period)
+    benchmark_return, benchmark_earning = calculate_spy_return(period=common_period)
     print(f"SPY BENCHMARK IS {benchmark_return}, {benchmark_earning}")
     print(f"Average return of the strategy: {average_return:.2f}%")
     print(f"total earning of the strategy: {total_earning:.2f}")
@@ -35,7 +34,6 @@ if __name__ == "__main__":
     print(f"Number of winning days: {np.sum(np.array(list(profit_by_date.values())) > 0)}")
     print(f"Number of losing days: {np.sum(np.array(list(profit_by_date.values())) < 0)}")
     
-    print(trade_volume_by_date)
     trade_volume_by_date_arr = np.array(list(trade_volume_by_date.values()))
     trade_volume_by_date_arr.sort()
     
